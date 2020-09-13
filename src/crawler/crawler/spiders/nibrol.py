@@ -23,3 +23,4 @@ class NibrolSpider(scrapy.Spider):
         self.products = product_section.css("ul.sub-menu li a::text").getall()
         self.products = [x.strip() for x in self.products]
         self.logger.info(f"Products: {self.products}")
+
