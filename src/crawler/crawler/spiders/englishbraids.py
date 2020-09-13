@@ -11,8 +11,7 @@ class EnglishbraidsSpider(scrapy.Spider):
         super(EnglishbraidsSpider, self).__init__(*args, **kwargs)
         self.start_url = "http://englishbraids.com/"
         self.start_parse = self.parse_products
-        # List of dict where each dict has key as product category and value as list of products
-        self.products = []
+        self.products = kwargs["products"] if "products" in kwargs else []
 
     def start_requests(self):
         yield scrapy.Request(url=self.start_url, callback=self.start_parse)
@@ -32,7 +31,8 @@ class EnglishbraidsSpider(scrapy.Spider):
             products = category.css("li:not([class]) a::text").getall()
             self.logger.info(f"Name: {name}")
             self.logger.info(f"Products: {products}")
-            self.products.append(
-                {name: products}
-            )
-
+            self.products += products
+            # self.products.append(
+            #     {name: products}
+            # )
+        self.logger.info(f"Products: {self.products}")
