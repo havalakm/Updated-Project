@@ -2,13 +2,13 @@ import colorama
 import scrapy
 
 
-class NibrolSpider(scrapy.Spider):
-    name = 'nibrol'
-    allowed_domains = ['nibrol.com']
+class RomaSpider(scrapy.Spider):
+    name = 'roma'
+    allowed_domains = ['roma.de']
 
     def __init__(self, *args, **kwargs):
-        super(NibrolSpider, self).__init__(*args, **kwargs)
-        self.start_url = "http://nibrol.com/"
+        super(RomaSpider, self).__init__(*args, **kwargs)
+        self.start_url = "http://roma.de/"
         self.start_parse = self.parse_products
         self.products = kwargs["products"] if "products" in kwargs else []
 
@@ -18,11 +18,8 @@ class NibrolSpider(scrapy.Spider):
     def parse_products(self, response):
         """ Parse products """
         print(f"\t{colorama.Fore.CYAN}Crawling: {response.url}")
-        menu_container = response.css("div.menu-floating-menu-container")
-        product_section = menu_container.css("li#menu-item-623")
-        self.products += [
-            x.strip()
-            for x in product_section.css("ul.sub-menu li a::text").getall()
-        ]
+        navigation_section = response.css("div.main-navigation-container")
+        product_menu = navigation_section.css("li.menu-item.has-subnavigation:first-child")
+        self.products += product_menu.css("li a ::text").getall()
         self.logger.info(f"Products: {self.products}")
 
