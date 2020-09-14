@@ -1,6 +1,6 @@
 """
 File:           sathualab_crawler.py
-Author:         Dibyaranjan Sathua
+Author:         Havala
 Created on:     13/09/20, 1:37 PM
 
 References:

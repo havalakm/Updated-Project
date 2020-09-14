@@ -1,6 +1,6 @@
 """
 File:           main.py
-Author:         Dibyaranjan Sathua
+Author:         Havala
 Created on:     13/09/20, 4:25 PM
 """
 import os
@@ -9,10 +9,12 @@ import smtplib
 from email.message import EmailMessage
 from collections import defaultdict
 
-
 import colorama
 
 from src import SathualabCrawler
+import socket
+
+socket.getaddrinfo('localhost', 25)
 
 
 def send_mail(to_addr, websites):
@@ -20,11 +22,11 @@ def send_mail(to_addr, websites):
     message = EmailMessage()
     message.set_content(f"Products in the following websites are changed: {', '.join(websites)}")
     message["Subject"] = "Product change notification"
-    message["From"] = "dibyaranjan@radisolutions.com"
+    message["From"] = "juliuskoch12@gmail.com"
     message["To"] = to_addr
 
-    with smtplib.SMTP_SSL("smtpout.secureserver.net", 465) as server:
-        server.login("dibyaranjan@radisolutions.com", "")
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login("juliuskoch12@gmail.com", "veget@ble")
         server.send_message(message)
 
 
