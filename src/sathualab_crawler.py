@@ -39,7 +39,7 @@ class SathualabCrawler:
         for spider in self.spiders:
             print(f"\n{colorama.Fore.GREEN}Products from {colorama.Fore.MAGENTA}{spider}"
                   f"{colorama.Fore.GREEN} spider: {self.spiders_products[spider]}")
-            hash_string = "".join(self.spiders_products[spider]).encode("utf-8")
+            hash_string = "".join(sorted(self.spiders_products[spider])).encode("utf-8")
             self.spiders_products_hash[spider] = hashlib.sha256(hash_string).hexdigest()
 
 

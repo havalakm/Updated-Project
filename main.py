@@ -5,6 +5,7 @@ Created on:     13/09/20, 4:25 PM
 """
 import os
 import json
+import shutil
 import smtplib
 from email.message import EmailMessage
 from collections import defaultdict
@@ -52,6 +53,7 @@ def main():
 
     print(f"{colorama.Fore.BLUE}Comparing current hash with reference hash")
     # Read reference hash file if exists for comparison
+    print(reference_hash_file)
     with open(reference_hash_file, mode="r") as infile:
         reference_hashes = json.load(infile)
 
@@ -59,6 +61,8 @@ def main():
     for spider, hash in spider_product_hashes.items():
         if spider in reference_hashes:
             if hash != reference_hashes[spider]:
+                print(hash)
+                print(reference_hashes[spider])
                 print(f"{colorama.Fore.LIGHTMAGENTA_EX}Hash mismatch for {spider}")
                 mismatch_spider.append(spider)
         else:
@@ -84,6 +88,10 @@ def main():
 
     else:
         print(f"{colorama.Fore.GREEN}No differences found")
+
+    # Copying the current hash to reference hash
+    print(f"{colorama.Fore.GREEN}Saving the current hash as the reference hash")
+    shutil.copyfile(current_hash_file, reference_hash_file)
 
 
 if __name__ == "__main__":
